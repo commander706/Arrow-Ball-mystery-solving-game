@@ -50,16 +50,38 @@ body{
   top: calc(70px + var(--sat));
 }
 
-@media (max-width: 740px), (max-height: 520px){
+/* ★修正: モバイル・縦画面時のボタン配置を最適化 */
+@media (max-width: 1024px) and (orientation: portrait), (max-width: 740px), (max-height: 520px){
   .play-controls{
     top: auto;
     left: 50%;
     right: auto;
-    bottom: calc(12px + var(--sab));
+    bottom: calc(24px + var(--sab)); /* 下部配置 */
     transform: translateX(-50%);
-    flex-wrap: wrap;
+    
+    flex-wrap: nowrap;       /* 折り返し禁止 */
     justify-content: center;
+    align-items: center;
+    
+    width: 92%;              /* 画面幅に合わせて伸縮 */
+    max-width: 420px;
+    gap: 8px;                /* 間隔調整 */
+    
+    pointer-events: none;    /* ボタン以外の隙間は操作を通す */
   }
+
+  .play-controls .btn {
+    pointer-events: auto;    /* ボタンは操作可能にする */
+    flex: 1;                 /* 3つのボタンを均等幅に */
+    padding: 10px 4px;       /* パディングを減らす */
+    font-size: 11px;         /* 文字サイズを小さくして収める */
+    white-space: nowrap;     /* 文字改行禁止 */
+    min-width: 0;            /* flex縮小許可 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .play-timer-area{
     top: calc(12px + var(--sat));
     right: calc(12px + var(--sar));
@@ -240,7 +262,6 @@ body.flash-reset::after { opacity: 1; transition: none; }
 .btn.dark { background: #444; color: #fff; }
 .btn.dark:hover { background: #222; }
 .btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.3); }
-.btn:active{ transform:translateY(0); }
 .btn.primary{ background:var(--accent); color:#4e3600; }
 .btn.primary:hover{ background:#ffc857; }
 .btn.small{ padding:8px 16px; font-size:13px; }
