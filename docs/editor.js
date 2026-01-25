@@ -128,7 +128,8 @@ function _vvSize(){
   return { w: vv ? vv.width : window.innerWidth, h: vv ? vv.height : window.innerHeight };
 }
 
-// ★修正: モバイル縦画面でより大きく表示するためのロジック変更
+
+// ★修正: スマホ縦画面でさらに大きく表示するための調整
 function fitGridToViewport(grid, extraTop = 0){
   if (!grid) return;
   if (grid.offsetParent === null) return; // hidden
@@ -142,24 +143,23 @@ function fitGridToViewport(grid, extraTop = 0){
   const isPortrait = h > w;
   
   // マージン設定: スマホ縦ならほぼ0にして攻める
+  // 横幅の余裕を極限まで減らす (4px)
   const marginW = isPortrait ? 4 : 32;
-  const marginH = isPortrait ? 140 : (extraTop + 32); 
-  // ※marginHの140は下のボタンエリア(約120px)+余裕分
+  // 下のボタンエリア(約140px)を考慮しつつ、盤面を上に配置するための計算
+  const marginH = isPortrait ? 160 : (extraTop + 32); 
 
   const availW = Math.max(10, w - marginW);
   const availH = Math.max(10, h - marginH);
 
-  // 回転(45deg)しているので、見た目の幅は rect.width で取れているはずだが、
-  // 余白計算を厳密にするためアスペクト比で制限
   let scale = Math.min(availW / rect.width, availH / rect.height);
 
-  // スマホ縦なら少し拡大率をブーストして迫力を出す
+  // スマホ縦なら拡大率を強力にブースト (1.15 -> 1.35)
   if (isPortrait) {
-    scale *= 1.15; 
+    scale *= 1.35; 
   }
 
-  // 制限範囲も広げる (下限0.6 -> 0.4, 上限1.5 -> 2.5)
-  const s = _clamp(scale, 0.4, 2.5);
+  // 制限範囲も広げる
+  const s = _clamp(scale, 0.4, 3.0);
   
   grid.style.setProperty("--gridScale", String(s));
 }
