@@ -1,3 +1,5 @@
+--- START OF FILE index.html ---
+
 <!-- index.html -->
 <!doctype html>
 <html lang="ja">
@@ -186,7 +188,6 @@
 
         <div class="palette-divider"></div>
 
-        <!-- 修正: 可変(type=17)を削除し、固定(type=18)だけ残す -->
         <button class="palette-item" data-type="18" title="ON/OFF矢印(固定)">
           <div class="preview-tile toggle-arrow-fix">↑</div>
           <span>ON/OFF矢印</span>
@@ -424,18 +425,6 @@
       </div>
     </form>
   </dialog>
-
-
-  <!-- Mobile: rotate notice (portrait) -->
-  <div id="rotateNotice" class="rotate-notice" aria-live="polite" aria-hidden="true">
-    <div class="rotate-notice__card">
-      <div class="rotate-notice__icon">📱</div>
-      <div class="rotate-notice__title">横画面にしてください</div>
-      <div class="rotate-notice__sub">スマホは横持ち推奨です</div>
-      <button id="btnFullscreen" class="btn primary small rotate-notice__btn">フルスクリーンで続行</button>
-      <div class="rotate-notice__sub2">※対応端末のみ（ブラウザによっては効かないことがあります）</div>
-    </div>
-  </div>
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
