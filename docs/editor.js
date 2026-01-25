@@ -129,12 +129,13 @@ function _vvSize(){
 }
 
 
-// ★修正: 拡大率を抑えて画面内に収めるよう調整
+
+// ★修正: 画面端が見切れないよう、確実に収まるサイズ(0.95倍)で計算
 function fitGridToViewport(grid, extraTop = 0){
   if (!grid) return;
   if (grid.offsetParent === null) return; // hidden
 
-  // Measure at scale=1
+  // 一旦スケール1でサイズ計測
   grid.style.setProperty("--gridScale", "1");
   const rect = grid.getBoundingClientRect();
   const { w, h } = _vvSize();
@@ -143,27 +144,27 @@ function fitGridToViewport(grid, extraTop = 0){
   const isPortrait = h > w;
   
   // マージン設定
-  // 横幅の余裕を少し持たせる (4px -> 20px) 端が見切れないように
+  // 横幅: 左右に少し余裕を持たせる (20px)
   const marginW = isPortrait ? 20 : 32;
-  
-  // 縦の計算: 下のボタン(140px) + 上のタイトルエリア(120px) を考慮
+  // 縦幅: 上のタイトルと下のボタン(約140px)を避ける
   const marginH = isPortrait ? 260 : (extraTop + 32); 
 
   const availW = Math.max(10, w - marginW);
   const availH = Math.max(10, h - marginH);
 
+  // 画面の幅・高さに収まる倍率を計算
   let scale = Math.min(availW / rect.width, availH / rect.height);
 
-  // スマホ縦ならごくわずかに大きくする程度に留める (1.35 -> 1.05)
+  // スマホ縦の場合は、計算値の95%に抑えて端切れを確実に防ぐ
   if (isPortrait) {
-    scale *= 1.05; 
+    scale *= 0.95; 
   }
 
-  // 制限範囲
   const s = _clamp(scale, 0.4, 2.5);
   
   grid.style.setProperty("--gridScale", String(s));
 }
+
 
 function fitVisibleGrids(){
   const playActive = document.getElementById("playScreen")?.classList.contains("screen--active");
