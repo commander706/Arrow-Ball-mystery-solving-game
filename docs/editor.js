@@ -127,20 +127,42 @@ function _vvSize(){
   const vv = window.visualViewport;
   return { w: vv ? vv.width : window.innerWidth, h: vv ? vv.height : window.innerHeight };
 }
+
+// ★修正: モバイル縦画面でより大きく表示するためのロジック変更
 function fitGridToViewport(grid, extraTop = 0){
   if (!grid) return;
-  if (grid.offsetParent === null) return; // hidden (screen not active)
-  // Measure at scale=1 so rotation is accounted for
+  if (grid.offsetParent === null) return; // hidden
+
+  // Measure at scale=1
   grid.style.setProperty("--gridScale", "1");
   const rect = grid.getBoundingClientRect();
   const { w, h } = _vvSize();
-  const margin = 16;
-  const availW = Math.max(100, w - margin * 2);
-  const availH = Math.max(100, h - margin * 2 - extraTop);
-  const s = _clamp(Math.min(availW / rect.width, availH / rect.height), 0.6, 1.5);
+  
+  // モバイル縦画面判定
+  const isPortrait = h > w;
+  
+  // マージン設定: スマホ縦ならほぼ0にして攻める
+  const marginW = isPortrait ? 4 : 32;
+  const marginH = isPortrait ? 140 : (extraTop + 32); 
+  // ※marginHの140は下のボタンエリア(約120px)+余裕分
+
+  const availW = Math.max(10, w - marginW);
+  const availH = Math.max(10, h - marginH);
+
+  // 回転(45deg)しているので、見た目の幅は rect.width で取れているはずだが、
+  // 余白計算を厳密にするためアスペクト比で制限
+  let scale = Math.min(availW / rect.width, availH / rect.height);
+
+  // スマホ縦なら少し拡大率をブーストして迫力を出す
+  if (isPortrait) {
+    scale *= 1.15; 
+  }
+
+  // 制限範囲も広げる (下限0.6 -> 0.4, 上限1.5 -> 2.5)
+  const s = _clamp(scale, 0.4, 2.5);
+  
   grid.style.setProperty("--gridScale", String(s));
 }
-
 function fitVisibleGrids(){
   const playActive = document.getElementById("playScreen")?.classList.contains("screen--active");
   const editorActive = document.getElementById("editorMainScreen")?.classList.contains("screen--active");
