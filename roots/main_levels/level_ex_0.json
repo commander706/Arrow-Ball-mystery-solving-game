@@ -1,0 +1,332 @@
+{
+  "id": "1769332219119",
+  "name": "ex_0",
+  "sub": "解除コード",
+  "author": "駒金",
+  "size": 8,
+  "autoSave": 0,
+  "created": 1769332219119,
+  "updated": 1769332475553,
+  "data": [
+    {
+      "type": 5,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 5,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 3,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 4,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 2,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 1
+    }
+  ]
+}

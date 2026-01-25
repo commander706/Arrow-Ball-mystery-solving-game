@@ -1,0 +1,257 @@
+{
+  "id": "1769325882286",
+  "name": "stage_18",
+  "sub": "クロマティック・ステップ",
+  "author": "駒金",
+  "size": 7,
+  "autoSave": 0,
+  "created": 1769325882286,
+  "updated": 1769325997381,
+  "data": [
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 5,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 5,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 5,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 5,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 5,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 5,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 5,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 5,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 5,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 5,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 5,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 6,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 5,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 5,
+      "rot": 3,
+      "val": 0
+    }
+  ]
+}
