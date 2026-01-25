@@ -1,0 +1,137 @@
+{
+  "id": "1769292470450",
+  "name": "stage_1",
+  "sub": "鋭角なターン",
+  "author": "駒金",
+  "size": 5,
+  "autoSave": 0,
+  "created": 1769292470450,
+  "updated": 1769292535196,
+  "data": [
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 2,
+      "val": 0
+    }
+  ]
+}
