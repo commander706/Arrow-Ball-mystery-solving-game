@@ -883,20 +883,43 @@ function showTutorialGuide(container, stageIndex) {
 }
 
 function retryRealPlay() {
+  // 1. ボールとアニメーションを即座に停止・削除
+  if (ballEl) {
+    gsap.killTweensOf(ballEl);
+    ballEl.remove();
+    ballEl = null;
+  }
+  isBallMoving = false;
+
+  // 2. クリア画面が開いているかどうかで処理を分岐
+  const isClearActive = clearOverlay.classList.contains("active");
+  
+  // クリア画面の演出中なら閉じる
   clearOverlay.classList.remove("active");
+
+  // クリア画面からのリトライならフェードアウトを待つ(500ms)、プレイ中なら即時(50ms)
+  const delay = isClearActive ? 500 : 50;
+
   setTimeout(() => {
     clearOverlay.classList.add("hidden");
-    if (originalLevelData) currentLevel.data = JSON.parse(JSON.stringify(originalLevelData));
-    resetGameState();
-    renderGrid(playGrid);
-    isBallMoving = false;
 
+    // 3. レベルデータを初期状態に復元
+    if (originalLevelData) {
+      currentLevel.data = JSON.parse(JSON.stringify(originalLevelData));
+    }
+    
+    // 4. ゲーム内変数をリセット (スイッチON/OFF等)
+    resetGameState();
+    
+    // 5. グリッド再描画 (これでブロックの見た目も初期化されます)
+    renderGrid(playGrid);
+    
     if (isOfficialPlay) {
       showTutorialGuide(playGrid, currentLevel._officialIndex);
     }
 
     startPlayTimer();
-  }, 500);
+  }, delay);
 }
 
 function startPlayTimer() {
@@ -1323,5 +1346,6 @@ function getWarpCluster(startIdx, levelData, size) {
   }
   return cluster;
 }
+
 
 init();
