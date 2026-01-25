@@ -347,7 +347,7 @@ async function loadOfficialLevels() {
   renderOfficialList();
 }
 
-// ▼▼▼ クリア状況の取得関数（互換性対応） ▼▼▼
+// クリア状況の取得関数（互換性対応）
 function getClearedStages() {
   const val = localStorage.getItem(OFFICIAL_PROGRESS_KEY);
   if (!val) return [];
@@ -377,7 +377,7 @@ function getClearedStages() {
   return [];
 }
 
-// ▼▼▼ クリア状況の保存関数 ▼▼▼
+// クリア状況の保存関数
 function saveStageCleared(index) {
   const cleared = getClearedStages();
   if (!cleared.includes(index)) {
@@ -387,7 +387,6 @@ function saveStageCleared(index) {
     localStorage.setItem(OFFICIAL_PROGRESS_KEY, JSON.stringify(cleared));
   }
 }
-
 
 function renderOfficialList() {
   if (!officialListContainer) return;
@@ -409,7 +408,7 @@ function renderOfficialList() {
   
   const isExUnlocked = localStorage.getItem(EX_UNLOCKED_KEY) === 'true';
 
-  // ▼▼▼ 修正: ステージ29単体ではなく、0～29全てがクリア済みかチェックする ▼▼▼
+  // 全クリアチェック: ステージ0～29全てがクリア済みかチェックする
   let isAllMainCleared = true;
   for (let i = 0; i < MAIN_STAGE_COUNT; i++) {
     if (!clearedStages.includes(i)) {
@@ -418,13 +417,11 @@ function renderOfficialList() {
     }
   }
 
-  // 全クリアチェック (メインステージ全コンプリート & EX未開放)
   if (isAllMainCleared && !isExUnlocked) {
     // 演出開始
     triggerAllClearSequence();
     return;
   }
-  // ▲▲▲ 修正ここまで ▲▲▲
 
   officialLevels.forEach((level, idx) => {
     // EX未開放ならEXステージは表示しない
@@ -883,7 +880,7 @@ function showTutorialGuide(container, stageIndex) {
 }
 
 function retryRealPlay() {
-  // 1. ボールとアニメーションを即座に停止・削除
+  // ボールとアニメーションを即座に停止・削除
   if (ballEl) {
     gsap.killTweensOf(ballEl);
     ballEl.remove();
@@ -891,27 +888,23 @@ function retryRealPlay() {
   }
   isBallMoving = false;
 
-  // 2. クリア画面が開いているかどうかで処理を分岐
   const isClearActive = clearOverlay.classList.contains("active");
-  
-  // クリア画面の演出中なら閉じる
   clearOverlay.classList.remove("active");
 
-  // クリア画面からのリトライならフェードアウトを待つ(500ms)、プレイ中なら即時(50ms)
   const delay = isClearActive ? 500 : 50;
 
   setTimeout(() => {
     clearOverlay.classList.add("hidden");
 
-    // 3. レベルデータを初期状態に復元
+    // レベルデータを初期状態に復元
     if (originalLevelData) {
       currentLevel.data = JSON.parse(JSON.stringify(originalLevelData));
     }
     
-    // 4. ゲーム内変数をリセット (スイッチON/OFF等)
+    // ゲーム内変数をリセット
     resetGameState();
     
-    // 5. グリッド再描画 (これでブロックの見た目も初期化されます)
+    // グリッド再描画
     renderGrid(playGrid);
     
     if (isOfficialPlay) {
@@ -1080,22 +1073,36 @@ function onMoveComplete(nextX, nextY, nextIdx, nextCell, direction, container) {
       }
     }
   }
+  
+  // ワープ判定修正
   if (nextCell.type === TYPE_WARP) {
     const color = nextCell.val;
-    // クラスタ(島)判定ロジック
-    // 1. 現在乗っているワープと繋がっている「地元のワープ群」を取得
+    
+    // 1. 現在のワープと隣接(連結)している同色ワープの集合を取得
     const localCluster = getWarpCluster(nextIdx, currentLevel.data, currentLevel.size);
 
-    // 2. 盤面上の全ワープから、この「地元のワープ群」に含まれない同色のワープを探す
-    let targetIdx = -1;
-    const allCells = currentLevel.data;
+    // 2. 盤面上の同色ワープを全てリストアップ
+    const allSameColorWarps = [];
+    currentLevel.data.forEach((c, i) => {
+      if (c.type === TYPE_WARP && c.val === color) {
+        allSameColorWarps.push(i);
+      }
+    });
 
-    for (let i = 0; i < allCells.length; i++) {
-      const c = allCells[i];
-      // 同じ色かつワープで、ローカルクラスタに含まれていないもの
-      if (c.type === TYPE_WARP && c.val === color && !localCluster.has(i)) {
-        targetIdx = i;
-        break; // 最初に見つけた「外部のワープ」をターゲットにする
+    let targetIdx = -1;
+
+    // A. まず「現在のクラスタに含まれていない（離れた場所にある）」ワープを探す
+    const outsideCandidate = allSameColorWarps.find(idx => !localCluster.has(idx));
+
+    if (outsideCandidate !== undefined) {
+      targetIdx = outsideCandidate;
+    } 
+    // B. 外部がなく、かつ「同色ワープが全体で2個だけ」の場合（＝隣接した2個のみ）
+    else if (allSameColorWarps.length === 2) {
+      // 自分ではないもう片方へ飛ぶ
+      const other = allSameColorWarps.find(idx => idx !== nextIdx);
+      if (other !== undefined) {
+        targetIdx = other;
       }
     }
 
@@ -1346,6 +1353,5 @@ function getWarpCluster(startIdx, levelData, size) {
   }
   return cluster;
 }
-
 
 init();
