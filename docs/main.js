@@ -7,49 +7,6 @@ export const screens = {
   officialSelect: document.getElementById("officialSelectScreen"),
 };
 
-// --- Mobile UX (rotate notice / optional orientation lock) ---
-const rotateNotice = document.getElementById("rotateNotice");
-const btnFullscreen = document.getElementById("btnFullscreen");
-
-function isMobileLike() {
-  // pointer: coarse works well for phones/tablets; fallback UA check.
-  return (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) ||
-         /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-
-function updateOrientationNotice() {
-  if (!rotateNotice) return;
-  const isPortrait = window.matchMedia && window.matchMedia("(orientation: portrait)").matches;
-  const show = isMobileLike() && isPortrait;
-  rotateNotice.classList.toggle("active", !!show);
-  rotateNotice.setAttribute("aria-hidden", show ? "false" : "true");
-}
-
-// Optional: fullscreen + try to lock orientation (works only on some browsers, often fullscreen-required)
-async function goFullscreenAndLockLandscape() {
-  try {
-    if (document.fullscreenElement == null && document.documentElement.requestFullscreen) {
-      await document.documentElement.requestFullscreen();
-    }
-  } catch (e) {}
-  try {
-    if (screen.orientation && screen.orientation.lock) {
-      await screen.orientation.lock("landscape");
-    }
-  } catch (e) {}
-}
-
-if (btnFullscreen) btnFullscreen.addEventListener("click", goFullscreenAndLockLandscape);
-
-// Update on load + orientation changes
-window.addEventListener("load", updateOrientationNotice);
-window.addEventListener("resize", updateOrientationNotice);
-try {
-  const mql = window.matchMedia("(orientation: portrait)");
-  if (mql && mql.addEventListener) mql.addEventListener("change", updateOrientationNotice);
-} catch (e) {}
-
-
 // BGM管理
 const bgm = document.getElementById("bgm");
 const bgmEx = document.getElementById("bgmEx");
@@ -75,7 +32,6 @@ export function playChin() {
     seChin.play().catch(()=>{});
   }
 }
-/* main.js の fadeBgmToEx 関数をこれに置き換え */
 export function fadeBgmToEx() {
   if (bgmFadeInterval) clearInterval(bgmFadeInterval);
   
