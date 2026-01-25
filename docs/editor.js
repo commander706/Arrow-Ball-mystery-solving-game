@@ -120,49 +120,51 @@ const btnDetailDelete = document.getElementById("btnDetailDelete");
 
 const editorGrid = document.getElementById("editorGrid");
 const playGrid = document.getElementById("playGrid");
-
-// --- Responsive grid fitting (mobile-friendly) ---
 function _clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
 function _vvSize(){
   const vv = window.visualViewport;
   return { w: vv ? vv.width : window.innerWidth, h: vv ? vv.height : window.innerHeight };
 }
 
-
-
-// ★修正: 画面端が見切れないよう、確実に収まるサイズ(0.95倍)で計算
+// ★完全修正: マスの数から論理的なサイズを計算し、強制的に画面内に収める
 function fitGridToViewport(grid, extraTop = 0){
   if (!grid) return;
-  if (grid.offsetParent === null) return; // hidden
-
-  // 一旦スケール1でサイズ計測
-  grid.style.setProperty("--gridScale", "1");
-  const rect = grid.getBoundingClientRect();
-  const { w, h } = _vvSize();
   
-  // モバイル縦画面判定
-  const isPortrait = h > w;
-  
-  // マージン設定
-  // 横幅: 左右に少し余裕を持たせる (20px)
-  const marginW = isPortrait ? 20 : 32;
-  // 縦幅: 上のタイトルと下のボタン(約140px)を避ける
-  const marginH = isPortrait ? 260 : (extraTop + 32); 
-
-  const availW = Math.max(10, w - marginW);
-  const availH = Math.max(10, h - marginH);
-
-  // 画面の幅・高さに収まる倍率を計算
-  let scale = Math.min(availW / rect.width, availH / rect.height);
-
-  // スマホ縦の場合は、計算値の95%に抑えて端切れを確実に防ぐ
-  if (isPortrait) {
-    scale *= 0.95; 
+  // 現在のレベルサイズ（列数）を取得
+  // editor.js内の変数 currentLevel が参照できる前提、または grid のスタイルから取得
+  let size = 10; // デフォルト安全策
+  if (grid.style.getPropertyValue('--cols')) {
+    size = parseInt(grid.style.getPropertyValue('--cols'), 10);
   }
-
-  const s = _clamp(scale, 0.4, 2.5);
   
-  grid.style.setProperty("--gridScale", String(s));
+  // 1マスのサイズ(50px) + 隙間(2px) + パディング(20px)
+  const baseSize = size * 52 + 20;
+  
+  // 45度回転後の「対角線の幅」が、実質的な横幅になる (√2倍)
+  // 少し余裕を見て 1.5倍 とする
+  const rotatedWidth = baseSize * 1.5;
+  const rotatedHeight = baseSize * 1.2; // 高さは透視投影で少し潰れるが余裕を見る
+
+  const { w, h } = _vvSize();
+  const isPortrait = h > w;
+
+  // 画面の有効幅・高さ（スマホの場合は余白を多めに取る）
+  const availW = w - (isPortrait ? 40 : 60);
+  // 上下のUI（タイトル＋ボタン）の分をガッツリ引く
+  const availH = h - (isPortrait ? 280 : 100);
+
+  // 横幅基準のスケール
+  let scaleW = availW / rotatedWidth;
+  // 高さ基準のスケール
+  let scaleH = availH / rotatedHeight;
+
+  // どちらか小さい方を採用（はみ出さないように）
+  let scale = Math.min(scaleW, scaleH);
+
+  // 極端に小さく/大きくならないように制限
+  scale = _clamp(scale, 0.35, 2.0);
+
+  grid.style.setProperty("--gridScale", String(scale));
 }
 
 
