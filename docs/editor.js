@@ -155,7 +155,7 @@ function fitGridToViewport(grid, extraTop = 0){
 
   // スマホ縦なら拡大率を強力にブースト (1.15 -> 1.35)
   if (isPortrait) {
-    scale *= 1.35; 
+    scale *= 0.65; 
   }
 
   // 制限範囲も広げる
