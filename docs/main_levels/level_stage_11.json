@@ -1,0 +1,417 @@
+{
+  "id": "1769324900576",
+  "name": "stage_11",
+  "sub": "飛距離の方程式",
+  "author": "駒金",
+  "size": 9,
+  "autoSave": 0,
+  "created": 1769324900576,
+  "updated": 1769325002996,
+  "data": [
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    }
+  ]
+}

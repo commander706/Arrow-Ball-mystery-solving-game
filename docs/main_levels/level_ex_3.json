@@ -1,0 +1,417 @@
+{
+  "id": "1769357595560",
+  "name": "ex_3",
+  "sub": "シグナル制御層",
+  "author": "金蕎麦",
+  "size": 9,
+  "autoSave": 0,
+  "created": 1769357595560,
+  "updated": 1769359388913,
+  "data": [
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 3
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 3,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 5
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 6,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 2,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 1
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 4
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    }
+  ]
+}
