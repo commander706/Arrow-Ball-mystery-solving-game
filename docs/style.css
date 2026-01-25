@@ -400,15 +400,29 @@ body.flash-reset::after { opacity: 1; transition: none; }
 
 @media (max-width:768px){ .editor-menu-container { flex-direction: column; padding: 10px; top: 60px; gap: 10px; } .level-details-section { order: -1; } .editor-topbar { padding-right: 10px; } }
 
-/* モバイル・縦画面時のボタン配置完全修正 */
+/* モバイル・縦画面時のボタン配置＆盤面配置 完全修正版 */
 @media (max-width: 1024px) and (orientation: portrait), (max-width: 740px), (max-height: 520px) {
   
-  /* 盤面をボタンと被らないよう上にずらす */
+  /* 盤面コンテナ: 上下左右中央寄せを強制 */
   .play-stage-container {
-    padding-bottom: 120px !important; /* ボタンエリア分の確保 */
-    align-items: center !important;   /* 上下中央（パディング込み） */
+    padding-bottom: 140px !important; /* ボタンエリア(約120px) + 余裕 */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important; /* 垂直方向中央 */
+    align-items: center !important;     /* 水平方向中央 */
+    width: 100% !important;
+    height: 100% !important;
   }
 
+  /* 盤面グリッド本体: マージンautoで念押しセンタリング */
+  .editor-grid {
+    margin: auto !important; /* Flexbox内での強制中央配置 */
+    flex: 0 0 auto !important; /* サイズ固定 */
+    /* 回転の中心ズレを防ぐ */
+    transform-origin: center center !important;
+  }
+
+  /* 操作ボタン群: 画面下部に固定 */
   .play-controls {
     position: absolute !important;
     top: auto !important;
@@ -417,14 +431,14 @@ body.flash-reset::after { opacity: 1; transition: none; }
     right: auto !important;
     transform: translateX(-50%) !important;
     display: flex !important;
-    flex-direction: row !important; /* 横並び強制 */
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
     justify-content: center;
     align-items: center;
     gap: 12px !important;
     width: 92% !important;
     max-width: 420px !important;
-    pointer-events: none; /* 隙間は貫通 */
+    pointer-events: none;
     z-index: 9000 !important;
   }
   
@@ -440,6 +454,7 @@ body.flash-reset::after { opacity: 1; transition: none; }
     box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
   }
   
+  /* 思考時間: 邪魔にならないよう右上へ */
   .play-timer-area {
     top: calc(15px + var(--sat)) !important;
     right: calc(15px + var(--sar)) !important;
@@ -451,6 +466,7 @@ body.flash-reset::after { opacity: 1; transition: none; }
     pointer-events: none;
   }
   
+  /* タイトル文字サイズ調整 */
   .play-intro h1 { font-size: 24px !important; }
   .play-intro p { font-size: 12px !important; }
 }
