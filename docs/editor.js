@@ -129,7 +129,7 @@ function _vvSize(){
 }
 
 
-// ★修正: スマホ縦画面でさらに大きく表示するための調整
+// ★修正: 拡大率を抑えて画面内に収めるよう調整
 function fitGridToViewport(grid, extraTop = 0){
   if (!grid) return;
   if (grid.offsetParent === null) return; // hidden
@@ -142,27 +142,29 @@ function fitGridToViewport(grid, extraTop = 0){
   // モバイル縦画面判定
   const isPortrait = h > w;
   
-  // マージン設定: スマホ縦ならほぼ0にして攻める
-  // 横幅の余裕を極限まで減らす (4px)
-  const marginW = isPortrait ? 4 : 32;
-  // 下のボタンエリア(約140px)を考慮しつつ、盤面を上に配置するための計算
-  const marginH = isPortrait ? 160 : (extraTop + 32); 
+  // マージン設定
+  // 横幅の余裕を少し持たせる (4px -> 20px) 端が見切れないように
+  const marginW = isPortrait ? 20 : 32;
+  
+  // 縦の計算: 下のボタン(140px) + 上のタイトルエリア(120px) を考慮
+  const marginH = isPortrait ? 260 : (extraTop + 32); 
 
   const availW = Math.max(10, w - marginW);
   const availH = Math.max(10, h - marginH);
 
   let scale = Math.min(availW / rect.width, availH / rect.height);
 
-  // スマホ縦なら拡大率を強力にブースト (1.15 -> 1.35)
+  // スマホ縦ならごくわずかに大きくする程度に留める (1.35 -> 1.05)
   if (isPortrait) {
-    scale *= 0.65; 
+    scale *= 1.05; 
   }
 
-  // 制限範囲も広げる
-  const s = _clamp(scale, 0.4, 3.0);
+  // 制限範囲
+  const s = _clamp(scale, 0.4, 2.5);
   
   grid.style.setProperty("--gridScale", String(s));
 }
+
 function fitVisibleGrids(){
   const playActive = document.getElementById("playScreen")?.classList.contains("screen--active");
   const editorActive = document.getElementById("editorMainScreen")?.classList.contains("screen--active");
