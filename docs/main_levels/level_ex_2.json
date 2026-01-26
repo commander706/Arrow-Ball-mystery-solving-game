@@ -1,0 +1,417 @@
+{
+  "id": "1769425063764",
+  "name": "二色の機関室",
+  "sub": "",
+  "author": "金蕎麦",
+  "size": 9,
+  "autoSave": 0,
+  "created": 1769425063764,
+  "updated": 1769428771797,
+  "data": [
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 16,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 18,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 16,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 18,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 18,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 2,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 5
+    },
+    {
+      "type": 3,
+      "rot": 3,
+      "val": 1
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 18,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 18,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 16,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 11,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 1
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    }
+  ]
+}
