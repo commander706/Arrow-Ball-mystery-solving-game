@@ -232,18 +232,21 @@ body.flash-reset::after { opacity: 1; transition: none; }
 .level-item.active { border-color: var(--accent); background: #fffcf0; box-shadow: 0 0 0 2px rgba(242, 184, 76, 0.3); }
 .level-info h4 { margin: 0; font-size: 16px; }
 .level-info p { margin: 2px 0 0; font-size: 12px; color: #888; }
-/* Official Level Item */
-.level-item.official { 
-  flex-direction: column; 
-  align-items: center; 
-  justify-content: center; 
-  min-height: 140px; 
-  text-align: center; 
-  gap: 8px; 
-  border-width: 3px; 
+.level-item.official {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 10px 20px; /* 下にバッジが入るスペースを確保 */
+  min-height: 160px;       /* 高さを少し広げてはみ出し防止 */
   position: relative;
-  padding: 15px 10px;
+  overflow: hidden;        /* はみ出しをカット、または内部に収める */
+  transition: background 0.3s, border-color 0.3s;
+  transform-style: preserve-3d; /* 立体的な回転を許可 */
+  backface-visibility: hidden;
 }
+
+
 .level-item.official h4 { font-size: 24px; color: #555; margin: 0; line-height: 1.2; }
 .level-item.official p { display: none; }
 .level-item.official .sub-title { font-size: 15px !important; color: #777; white-space: normal; line-height: 1.4; font-weight: bold; margin-top: 4px; }
@@ -462,11 +465,37 @@ body.flash-reset::after { opacity: 1; transition: none; }
 @keyframes floatSparkle { 0%{ transform:translateZ(0) scale(0.5); opacity:0; } 50%{ opacity:0.8; } 100%{ transform:translateZ(60px) scale(1.2); opacity:0; } }
 
 /* Play UI */
-.play-ui-layer { position: absolute; inset: 0; pointer-events: none; z-index: 500; }
-.play-intro { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); text-align: center; }
-.play-intro h1 { font-size: 40px; color: var(--accent); margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.5); opacity: 0; transition: color 0.5s;}
-.play-intro h1.ex-mode { color: var(--ex-title); }
-.play-intro p { margin: 5px 0; font-size: 18px; color: #fff; opacity: 0; }
+
+.play-intro {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 600;
+}
+
+.play-intro h1 {
+  font-size: 40px;
+  color: var(--accent);
+  margin: 0;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  opacity: 1; /* JSで制御するため初期は1に(GSAPでsetする) */
+}
+
+.play-intro h1.ex-mode {
+  color: var(--ex-title);
+}
+
+.play-intro p {
+  margin: 5px 0;
+  font-size: 18px;
+  color: #fff;
+  opacity: 1;
+}
+
 .play-timer-area { position: absolute; top: 70px; right: 20px; background: rgba(0,0,0,0.4); padding: 8px 16px; border-radius: 8px; font-family: monospace; font-size: 16px; color: #fff; opacity: 0; }
 .play-stage-container { position:absolute; inset:0; display:flex; justify-content:center; align-items:center; perspective:1000px; }
 .play-controls { position: absolute; top: 70px; left: 20px; display: flex; gap: 10px; pointer-events: auto; z-index: 800; }
@@ -527,94 +556,6 @@ body.flash-reset::after { opacity: 1; transition: none; }
   .title-action-buttons { top: 20px; right: 20px; gap: 10px; }
   .title-top-btn { width: 60px; height: 60px; font-size: 30px; }
 }
-
-/* モバイル・縦画面時のボタン配置＆盤面配置 完全修正版 */
-@media (max-width: 1024px) and (orientation: portrait), (max-width: 740px), (max-height: 520px) {
-  
-  /* 盤面コンテナ: 上下左右中央寄せを強制 */
-  .play-stage-container {
-    padding-bottom: 140px !important; /* ボタンエリア(約120px) + 余裕 */
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important; /* 垂直方向中央 */
-    align-items: center !important;     /* 水平方向中央 */
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  /* 盤面グリッド本体: マージンautoで念押しセンタリング */
-  .editor-grid {
-    margin: auto !important; /* Flexbox内での強制中央配置 */
-    flex: 0 0 auto !important; /* サイズ固定 */
-    /* 回転の中心ズレを防ぐ */
-    transform-origin: center center !important;
-  }
-
-  /* 操作ボタン群: 画面下部に固定 */
-  .play-controls {
-    position: absolute !important;
-    top: auto !important;
-    bottom: calc(30px + var(--sab)) !important;
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    justify-content: center;
-    align-items: center;
-    gap: 12px !important;
-    width: 92% !important;
-    max-width: 420px !important;
-    pointer-events: none;
-    z-index: 9000 !important;
-  }
-  
-  .play-controls .btn {
-    pointer-events: auto;
-    flex: 1 1 auto !important;
-    width: auto !important;
-    min-width: 0 !important;
-    padding: 14px 0 !important;
-    margin: 0 !important;
-    font-size: 12px !important;
-    white-space: nowrap !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
-  }
-  
-  /* 思考時間: 邪魔にならないよう右上へ */
-  .play-timer-area {
-    top: calc(15px + var(--sat)) !important;
-    right: calc(15px + var(--sar)) !important;
-    left: auto !important;
-    transform: none !important;
-    font-size: 12px !important;
-    padding: 4px 8px !important;
-    background: rgba(0,0,0,0.6) !important;
-    pointer-events: none;
-  }
-  
-  /* タイトル文字サイズ調整 */
-  .play-intro h1 { font-size: 24px !important; }
-  .play-intro p { font-size: 12px !important; }
-}
-/* --- style.css --- */
-
-/* 公式ステージカードの基本調整 */
-.level-item.official {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 15px 10px 20px; /* 下にバッジが入るスペースを確保 */
-  min-height: 160px;       /* 高さを少し広げてはみ出し防止 */
-  position: relative;
-  overflow: hidden;        /* はみ出しをカット、または内部に収める */
-  transition: background 0.3s, border-color 0.3s;
-  transform-style: preserve-3d; /* 立体的な回転を許可 */
-  backface-visibility: hidden;
-}
-
 /* クリアタイムバッジの修正 */
 .clear-time-info {
   margin-top: 12px;       /* 作者名との間隔 */
@@ -659,6 +600,72 @@ body.flash-reset::after { opacity: 1; transition: none; }
   background: #f0fff4 !important;
   box-shadow: 0 4px 12px rgba(46, 213, 115, 0.2);
 }
+/* モバイル・縦画面時のボタン配置＆盤面配置 完全修正版 */
+@media (max-width: 1024px) and (orientation: portrait), (max-width: 740px), (max-height: 520px) {
+  
+  /* 盤面コンテナ: 上下左右中央寄せを強制 */
+  .play-stage-container {
+    padding-bottom: 140px !important; /* ボタンエリア(約120px) + 余裕 */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important; /* 垂直方向中央 */
+    align-items: center !important;     /* 水平方向中央 */
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* 盤面グリッド本体: マージンautoで念押しセンタリング */
+  .editor-grid {
+    margin: auto !important; /* Flexbox内での強制中央配置 */
+    flex: 0 0 auto !important; /* サイズ固定 */
+    /* 回転の中心ズレを防ぐ */
+    transform-origin: center center !important;
+  }
+
+  /* 操作ボタン群: 画面下部に固定 */
+  .play-controls {
+    position: absolute !important;
+    top: auto !important;
+    bottom: calc(30px + var(--sab)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    width: auto !important; /* 92%からautoへ変更し、中身に合わせる */
+    pointer-events: auto !important; /* 確実にクリックを通す */
+    z-index: 9000 !important;
+  }
+  
+  .play-controls .btn {
+    pointer-events: auto;
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 14px 0 !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+  }
+  
+  /* 思考時間: 邪魔にならないよう右上へ */
+  .play-timer-area {
+    top: calc(15px + var(--sat)) !important;
+    right: calc(15px + var(--sar)) !important;
+    left: auto !important;
+    transform: none !important;
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+    background: rgba(0,0,0,0.6) !important;
+    pointer-events: none;
+  }
+  
+  /* タイトル文字サイズ調整 */
+  .play-intro h1 { font-size: 24px !important; }
+  .play-intro p { font-size: 12px !important; }
+}
+
 
 /* ------------------------------
    Mobile & Small-window tweaks
