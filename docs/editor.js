@@ -952,40 +952,119 @@ function stopTestPlayMode() {
   renderGrid(editorGrid);
 }
 
-// --- 実プレイ開始処理のタイマー部分修正 ---
 function startRealPlay(levelId, isOfficial = false) {
   if (levelId) {
     const levels = getSavedLevels();
     currentLevel = levels.find(l => l.id === levelId);
   }
-  if (!currentLevel) return;
 
-  // カスタムレベルの場合はここで時間をセット
-  if (!isOfficial) levelSessionStartTime = Date.now();
+  if (!currentLevel || !currentLevel.data) return;
 
   originalLevelData = JSON.parse(JSON.stringify(currentLevel.data));
-  isEditorMode = false; isRealPlay = true; isOfficialPlay = isOfficial;
+  isEditorMode = false; 
+  isRealPlay = true; 
+  isOfficialPlay = isOfficial;
   isBallMoving = false;
   resetGameState();
 
+  // ヒントボタンの表示
+  if (currentLevel.hints && currentLevel.hints.length > 0) {
+    btnPlayHint.classList.remove("hidden");
+  } else {
+    btnPlayHint.classList.add("hidden");
+  }
+
   showLoading(() => {
-    // UI反映
-    document.getElementById("playIntroTitle").textContent = currentLevel.name;
+    // 1. テキストのセット
+    playIntroTitle.textContent = currentLevel.name;
     document.getElementById("playIntroSub").textContent = currentLevel.sub || "";
     document.getElementById("playIntroAuthor").textContent = currentLevel.author || "名無し";
-    
-    // タイマー開始
-    startPlayTimer();
-
-    clearOverlay.classList.remove("active", "hidden");
+    playTimerVal.textContent = "00:00:00";
     clearOverlay.classList.add("hidden");
+    clearOverlay.classList.remove("active");
+
+    // 2. EX演出の切り替え
+    if (isOfficialPlay && currentLevel._isEx) {
+      setSpaceBackground(true);
+      fadeBgmToEx();
+      playIntroTitle.classList.add("ex-mode");
+      startCameraFloat();
+    } else {
+      setSpaceBackground(false);
+      fadeBgmToNormal();
+      playIntroTitle.classList.remove("ex-mode");
+      stopCameraFloat();
+    }
+
+    // 3. ボタンイベントの再登録 (確実に動作させる)
+    const btnBack = document.getElementById("btnPlayBack");
+    const btnRetry = document.getElementById("btnPlayRetry");
+
+    btnBack.replaceWith(btnBack.cloneNode(true)); // 既存リスナーの除去
+    btnRetry.replaceWith(btnRetry.cloneNode(true));
+
+    document.getElementById("btnPlayBack").addEventListener("click", () => {
+      playChin();
+      stopPlayTimer();
+      stopPlayMode();
+      if (isOfficialPlay) showScreen("officialSelect");
+      else showScreen("editorSelect");
+    });
+
+    document.getElementById("btnPlayRetry").addEventListener("click", () => {
+      playChin();
+      retryRealPlay();
+    });
+
+    // 4. グリッド描画
     renderGrid(playGrid);
+    if (isOfficial) {
+      showTutorialGuide(playGrid, currentLevel._officialIndex);
+    }
+
+    // 5. 画面切り替え
     showScreen("play");
     requestAnimationFrame(fitVisibleGrids);
+
+    // 6. 導入アニメーション (真ん中に出現 -> 上へスライド)
+    const introEl = document.getElementById("playIntro");
+    const introChildren = introEl.querySelectorAll("h1, p");
+    const timerArea = document.querySelector(".play-timer-area");
+
+    // 初期化
+    gsap.killTweensOf([introEl, introChildren, timerArea]);
+    
+    // 真ん中に配置
+    gsap.set(introEl, { top: "50%", yPercent: -50, opacity: 1 });
+    gsap.set(introChildren, { y: 30, opacity: 0 });
+    gsap.set(timerArea, { opacity: 0 });
+
+    const isCompactUI = window.innerWidth < 768 || window.innerHeight < 600;
+    const targetTop = isCompactUI ? "120px" : "80px"; // 上にスライドした時の位置
+
+    const tl = gsap.timeline();
+    tl.to(introChildren, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "power2.out"
+    })
+    .to(introEl, {
+      top: targetTop,
+      yPercent: 0,
+      duration: 1.2,
+      ease: "power3.inOut",
+      delay: 1.0 // 1秒間真ん中で見せる
+    })
+    .to(timerArea, {
+      opacity: 1,
+      duration: 0.5
+    }, "-=0.5");
+
+    startPlayTimer();
   });
 }
-
-
 
 // ★追加: プレイ中のヒント表示
 function showPlayHints() {
