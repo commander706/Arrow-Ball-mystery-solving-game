@@ -1,0 +1,529 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>3D Arrow & Ball</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <!-- SVG Filters (Hidden) -->
+  <svg style="display: none;">
+    <defs>
+      <filter id="displacementFilter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <!-- 水中さざ波用フィルタ -->
+      <filter id="displacementFilter">
+        <feTurbulence type="turbulence" baseFrequency="0.01 0.02" numOctaves="2" result="noise" seed="0" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Audio -->
+  <audio id="bgm" src="./assets/bgm.ogg" loop preload="auto"></audio>
+  <audio id="bgmEx" src="./assets/bgm_ex.ogg" loop preload="auto"></audio>
+  <!-- 追加BGM -->
+  <audio id="bgm2" src="./assets/bgm_2.ogg" loop preload="auto"></audio>
+  <audio id="bgm3" src="./assets/bgm_3.ogg" loop preload="auto"></audio>
+
+  <audio id="seChange0" src="./assets/direction0.ogg" preload="auto"></audio>
+  <audio id="seChange1" src="./assets/direction1.ogg" preload="auto"></audio>
+  <audio id="seGoal" src="./assets/goal.ogg" preload="auto"></audio>
+  <audio id="seBreak" src="./assets/break.ogg" preload="auto"></audio>
+  <audio id="sePush" src="./assets/push.ogg" preload="auto"></audio>
+  <audio id="seChin" src="./assets/chin.ogg" preload="auto"></audio>
+  <audio id="seAllClear" src="./assets/all_clear.ogg" preload="auto"></audio>
+  <audio id="seExSpawn" src="./assets/ex_spawn.ogg" preload="auto"></audio>
+  <audio id="seDied" src="./assets/died.ogg" preload="auto"></audio>
+  <audio id="sePush2" src="./assets/push2.ogg" preload="auto"></audio>
+
+  <!-- 背景要素 -->
+  <div class="bg" id="mainBg">
+    <div id="spaceParticles" class="space-stars hidden"></div>
+    <div id="burningParticles" class="burning-overlay hidden"></div>
+    <div id="underwaterOverlay" class="underwater-overlay hidden"></div>
+  </div>
+
+  <!-- タイトル画面 -->
+  <div id="titleScreen" class="screen screen--active">
+    <div class="title-action-buttons">
+      <button id="btnPatchNotes" class="btn-icon title-top-btn" aria-label="Patch Notes">📋</button>
+      <button id="btnTitleSettings" class="btn-icon title-top-btn" aria-label="Settings">⚙️</button>
+    </div>
+
+    <div class="titleWrap" id="titleWrap">
+      <div class="logoStage" id="logoStage" aria-label="3D Arrow & Ball">
+        <canvas id="logoCanvas" class="logoCanvas" width="1024" height="256"></canvas>
+        <img id="logoFallback" class="logoFallback" src="./assets/logo.png" alt="3D Arrow & Ball">
+      </div>
+      <div class="menu" id="menuButtons">
+        <button id="btnPlay" class="btn3d" aria-label="PLAY">
+          <span><b>P</b></span><span><b>L</b></span><span><b>A</b></span><span><b>Y</b></span>
+        </button>
+        <!-- FANMADES ボタン追加 -->
+        <button id="btnFanmade" class="btn3d btn-fanmade" aria-label="FANMADES">
+          <span><b>F</b></span><span><b>A</b></span><span><b>N</b></span><span><b>S</b></span>
+        </button>
+        <button id="btnEditor" class="btn3d" aria-label="EDITOR">
+          <span><b>E</b></span><span><b>D</b></span><span><b>I</b></span><span><b>T</b></span><span><b>O</b></span><span><b>R</b></span>
+        </button>
+      </div>
+      <p class="hint">3D Arrow & Ball Version 1.3.0<br>最終更新日2026/01/29<br>Made by 駒金</p>
+    </div>
+  </div>
+
+  <!-- 公式レベル選択画面 -->
+  <div id="officialSelectScreen" class="screen">
+    <div class="topbar">
+      <div class="topbar__title">ステージ選択</div>
+      <button class="btn small dark" data-to="title">戻る</button>
+    </div>
+    <div class="editor-menu-container center-layout">
+      <div class="level-list-section full-width">
+        <div class="section-header">
+          <h3>メインステージ</h3>
+          <p style="font-size:12px; color:#666;">順番に攻略することを推奨します</p>
+        </div>
+        <div id="officialLevelList" class="level-list grid-list"></div>
+        <div class="data-reset-area">
+          <button id="btnResetProgress" class="btn-text-danger">進行度を削除する</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="fanmadeSelectScreen" class="screen fanmade-theme">
+    <div class="topbar fanmade-topbar">
+      <div class="topbar__title">COMMUNITY LEVELS</div>
+      <button class="btn small dark" data-to="title">BACK</button>
+    </div>
+    <div class="editor-menu-container center-layout">
+      <div class="level-list-section full-width fanmade-section">
+        <div class="section-header">
+          <h3 style="color:#a29bfe;">創作レベル</h3>
+        </div>
+        <div id="fanmadeLevelList" class="level-list grid-list fanmade-grid">
+          <div style="padding:20px; text-align:center; color:#888;">スキャン中...</div>
+        </div>
+        <!-- ▼▼▼ 追加: 進行度リセットボタン ▼▼▼ -->
+        <div class="data-reset-area">
+          <button id="btnResetFanmadeProgress" class="btn-text-danger" style="color: #a29bfe;">進行度を削除する</button>
+        </div>
+        <!-- ▲▲▲ 追加ここまで ▲▲▲ -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 全クリア演出 -->
+  <div id="allClearOverlay" class="all-clear-overlay hidden">
+    <div class="congrats-text" id="congratsText">メインステージ全クリア！<br>おめでとう！</div>
+    <div class="ex-unlock-text" id="exUnlockText">
+      更なる難易度があなたを待っている....<br>EXモードが追加されました。
+    </div>
+  </div>
+
+  <!-- エディターレベル選択画面 -->
+  <div id="editorSelectScreen" class="screen">
+    <div class="topbar">
+      <div class="topbar__title">カスタムレベル</div>
+      <button class="btn small dark" data-to="title">戻る</button>
+    </div>
+    <div class="editor-menu-container">
+      <div class="level-list-section">
+        <div class="section-header">
+          <h3>保存されたレベル</h3>
+          <div class="list-actions">
+            <button id="btnNewLevel" class="btn primary small">＋ 新規作成</button>
+            <button id="btnImportLevel" class="btn small dark">インポート</button>
+            <input type="file" id="fileImport" accept=".json" style="display:none">
+          </div>
+        </div>
+        <div id="levelList" class="level-list"></div>
+      </div>
+      <div class="level-details-section">
+        <div id="levelDetailsPanel" class="details-card hidden">
+          <div class="details-header">
+            <h2 id="detailTitle">Level Name</h2>
+            <p id="detailSub">Subtitle</p>
+            <div class="detail-meta-grid">
+              <div>作者: <span id="detailAuthor">Author</span></div>
+              <div id="detailSizeDate">Size: 8x8 | Date</div>
+              <div id="detailUpdate" style="font-size:11px; color:#999;">最終更新: -</div>
+            </div>
+          </div>
+          <div class="details-preview">
+            <div class="preview-box">PREVIEW AREA</div>
+          </div>
+          <div class="details-actions">
+            <button id="btnDetailPlay" class="btn action-play">遊ぶ</button>
+            <button id="btnDetailEdit" class="btn action-edit">編集</button>
+            <button id="btnDetailDelete" class="btn action-delete">削除</button>
+          </div>
+        </div>
+        <div id="noSelectionMsg" class="no-selection">
+          <p>リストからレベルを選択してください</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- エディター本画面 -->
+  <div id="editorMainScreen" class="screen">
+    <div class="topbar editor-topbar">
+      <div class="editor-info-area">
+        <div class="topbar__title" id="editorLevelTitle">UNTITLED</div>
+        <div class="editor-timer">編集時間: <span id="editorTimerValue">00:00:00</span></div>
+      </div>
+      <div class="editor-top-actions">
+        <button id="btnHowTo" class="btn small dark">作り方</button>
+        <button id="btnSettings" class="btn small dark">設定</button>
+        <button class="btn small dark" id="btnExitEditorConfirm">終了</button>
+      </div>
+    </div>
+
+    <div class="editor-stage">
+      <div id="editorGrid" class="editor-grid"></div>
+    </div>
+
+    <!-- パレット -->
+    <div id="editorPalette" class="editor-palette">
+      <div class="palette-header">
+        <span>TILES</span>
+        <button id="btnTogglePalette" class="btn-icon">_</button>
+      </div>
+      <div class="palette-content">
+        <button class="palette-item active" data-type="1" title="通常床">
+          <div class="preview-tile normal"></div><span>通常</span>
+        </button>
+        <button class="palette-item" data-type="0" title="奈落（消去）">
+          <div class="preview-tile void">×</div><span>奈落</span>
+        </button>
+        <button class="palette-item" data-type="2" title="開始地点">
+          <div class="preview-tile start">↑</div><span>開始</span>
+        </button>
+        <button class="palette-item" data-type="3" title="ゴール">
+          <div class="preview-tile goal">↑</div><span>ゴール</span>
+        </button>
+        <div class="palette-divider"></div>
+        <button class="palette-item" data-type="4" title="可変矢印">
+          <div class="preview-tile switch-arrow">↑</div><span>可変矢印</span>
+        </button>
+        <button class="palette-item" data-type="5" title="固定矢印">
+          <div class="preview-tile fixed-arrow">↑</div><span>固定矢印</span>
+        </button>
+        <div class="palette-divider"></div>
+        <button class="palette-item" data-type="18" title="ON/OFF矢印(固定)">
+          <div class="preview-tile toggle-arrow-fix">↑</div><span>ON/OFF矢印</span>
+        </button>
+        <button class="palette-item" data-type="16" title="トグルスイッチ">
+          <div class="preview-tile toggle-switch">▲</div><span>切替SW</span>
+        </button>
+        <div class="palette-divider"></div>
+        <button class="palette-item" data-type="6" title="90度転換(可変)">
+          <div class="preview-tile turn-var"></div><span>転換(可)</span>
+        </button>
+        <button class="palette-item" data-type="7" title="90度転換(固定)">
+          <div class="preview-tile turn-fix"></div><span>転換(固)</span>
+        </button>
+        <!-- 新しいUターンタイル -->
+        <button class="palette-item" data-type="8" title="Uターン(通常/一方通行)">
+          <div class="preview-tile u-turn"></div><span>Uターン</span>
+        </button>
+        <!-- ↑ data-type=8 (クリックで19に変化) -->
+        <button class="palette-item" data-type="19" title="一方通行Uターン" style="display:none;">
+          <div class="preview-tile one-way-u-turn"></div><span>一方Uターン</span>
+        </button>
+
+        <div class="palette-divider"></div>
+        <button class="palette-item" data-type="9" title="ガラス板(1~5)">
+          <div class="preview-tile glass">1</div><span>ガラス</span>
+        </button>
+        <button class="palette-item" data-type="10" title="ジャンプ(1~3)">
+          <div class="preview-tile jump">1</div><span>ジャンプ</span>
+        </button>
+        <div class="palette-divider"></div>
+        <button class="palette-item" data-type="11" title="ワープ(7色)">
+          <div class="preview-tile warp color-1"></div><span>ワープ</span>
+        </button>
+        <button class="palette-item" data-type="12" title="スイッチ(7色)">
+          <div class="preview-tile switch color-1"></div><span>スイッチ</span>
+        </button>
+        <button class="palette-item" data-type="13" title="ブロックON(7色)">
+          <div class="preview-tile block color-1">ON</div><span>ブロックON</span>
+        </button>
+        <button class="palette-item" data-type="15" title="ブロックOFF(7色)">
+          <div class="preview-tile block-off color-1">OFF</div><span>ブロックOFF</span>
+        </button>
+        <button class="palette-item" data-type="14" title="クリスタル">
+          <div class="preview-tile crystal"></div><span>クリスタル</span>
+        </button>
+        <p class="palette-hint">ホイール: 詳細切替<br>(角度/数値/色)</p>
+      </div>
+    </div>
+
+    <div class="editor-bottom-actions">
+      <button id="btnTestPlay" class="btn action-play big-btn">テストプレイ</button>
+      <div style="display:flex; gap:10px;">
+        <button id="btnExportConfirm" class="btn dark big-btn">エクスポート</button>
+        <button id="btnSaveLevel" class="btn primary big-btn">セーブする</button>
+      </div>
+    </div>
+
+    <div id="testPlayUI" class="test-play-ui hidden">
+      <div class="test-msg"><span style="font-size:12px; font-weight:normal;">白いタイルはクリックで変更可能</span></div>
+      <button id="btnStopTest" class="btn dark">編集に戻る</button>
+    </div>
+  </div>
+
+  <!-- 本番プレイ画面 -->
+  <div id="playScreen" class="screen">
+    <div class="play-ui-layer">
+      <div id="playControls" class="play-controls">
+        <button id="btnPlayBack" class="btn small dark">戻る</button>
+        <button id="btnPlayRetry" class="btn small dark">リトライ</button>
+        <button id="btnPlayHint" class="btn small primary hint-btn hidden">💡 ヒント</button>
+        <button id="btnPlaySkip" class="btn small skip">スキップ/クリア</button>
+      </div>
+      <div id="playIntro" class="play-intro">
+        <h1 id="playIntroTitle">LEVEL NAME</h1>
+        <p id="playIntroSub">SUBTITLE</p>
+        <p id="playIntroAuthor">Author Name</p>
+      </div>
+      <div class="play-timer-area">
+        思考時間: <span id="playTimerVal">00:00:00</span>
+      </div>
+    </div>
+
+    <div class="play-stage-container" id="playStageContainer">
+      <div id="playGrid" class="editor-grid"></div>
+    </div>
+
+    <div id="clearOverlay" class="clear-overlay hidden">
+      <div class="clear-text-container" id="clearTextContainer"></div>
+      <div class="clear-actions">
+        <button id="btnClearNext" class="btn primary">次のステージ</button>
+        <button id="btnClearRetry" class="btn dark">リトライ</button>
+        <button id="btnClearBack" class="btn dark">戻る</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- モーダル類 -->
+  <dialog id="exitModal" class="modal center-modal">
+    <h3>エディターを終了しますか？</h3>
+    <div class="modal-actions" style="justify-content: center; gap: 20px; margin-top: 20px;">
+      <button id="btnExitSave" class="btn primary">保存して終了</button>
+      <button id="btnExitNoSave" class="btn danger">保存せず終了</button>
+      <button id="btnExitCancel" class="btn dark">キャンセル</button>
+    </div>
+  </dialog>
+
+  <dialog id="exportModal" class="modal center-modal">
+    <h3>レベルをエクスポートしますか？</h3>
+    <p style="font-size:13px; color:#666;">JSONファイルとしてダウンロードされます。</p>
+    <div class="modal-actions" style="justify-content: center; gap: 20px; margin-top: 20px;">
+      <button id="btnExportExec" class="btn primary">実行</button>
+      <button id="btnExportCancel" class="btn dark">キャンセル</button>
+    </div>
+  </dialog>
+
+  <dialog id="skipWarningModal" class="modal center-modal">
+    <h3>⚠️ ステージスキップの警告</h3>
+    <p>前のステージをクリアしていません。<br>順番に攻略することを推奨します。<br>十分に楽しめない可能性がありますが、それでも遊びますか？</p>
+    <div class="modal-actions" style="justify-content: center; gap: 20px; margin-top: 20px;">
+      <button id="btnSkipExec" class="btn danger">それでも遊ぶ</button>
+      <button id="btnSkipCancel" class="btn dark">やめる</button>
+    </div>
+  </dialog>
+
+  <dialog id="skipConfirmModal" class="modal center-modal">
+    <h3>このステージをクリアしますか？</h3>
+    <p>強制的にクリア扱いとして次のステージへ進みます。</p>
+    <div class="modal-actions" style="justify-content: center; gap: 20px; margin-top: 20px;">
+      <button id="btnSkipConfirmExec" class="btn danger">はい、クリアする</button>
+      <button id="btnSkipConfirmCancel" class="btn dark">いいえ</button>
+    </div>
+  </dialog>
+
+  <dialog id="howToModal" class="modal slide-modal">
+    <div class="modal-header">
+      <h3>作り方 & 操作方法</h3>
+      <button class="btn-close" id="closeHowTo">×</button>
+    </div>
+    <div class="modal-body">
+      <ul>
+        <li><strong>タイルの配置:</strong> パレットから選んで配置。</li>
+        <li><strong>Uターン:</strong> 配置後にクリックで「全方向」「一方通行」を切替。</li>
+        <li><strong>ホイール操作:</strong> 角度/数値/色の変更。</li>
+      </ul>
+    </div>
+  </dialog>
+
+  <!-- レベル設定モーダル（拡張版） -->
+  <dialog id="settingsModal" class="modal slide-modal">
+    <div class="modal-header">
+      <h3>レベル設定</h3>
+      <button class="btn-close" id="closeSettings">×</button>
+    </div>
+    <div class="modal-body">
+      <form id="settingsForm">
+        <label><span>レベル名</span><input type="text" name="levelName" id="editLevelName" required></label>
+        <label><span>サブタイトル</span><input type="text" name="levelSub" id="editLevelSub"></label>
+        <label><span>作者名</span><input type="text" name="levelAuthor" id="editLevelAuthor"></label>
+
+        <!-- 背景・音楽選択 -->
+        <label><span>背景テーマ</span>
+          <select name="bgTheme" id="editBgTheme">
+            <option value="warm">温暖 (Default)</option>
+            <option value="space">宇宙 (EX)</option>
+            <option value="cold">寒冷</option>
+            <option value="dark_oak">黒樫木材</option>
+            <option value="burning">燃焼</option>
+            <option value="underwater">水中</option>
+          </select>
+        </label>
+        <label><span>BGM</span>
+          <select name="bgmTheme" id="editBgmTheme">
+            <option value="warm">温暖 (Default)</option>
+            <option value="vertex">頂点 (EX)</option>
+            <option value="wind">風鈴</option>
+            <option value="speculation">思索</option>
+          </select>
+        </label>
+
+        <hr style="border:0; border-top:1px solid #ddd; margin: 20px 0;">
+        <div class="hints-section">
+          <div class="section-header">
+            <span>ヒント設定</span>
+            <button type="button" id="btnAddHint" class="btn small dark">＋ 追加</button>
+          </div>
+          <div id="editorHintsContainer" class="hints-list-editor"></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn primary">適用</button></div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="hintViewModal" class="modal center-modal">
+    <h3>💡 ステージヒント</h3>
+    <p style="font-size:12px; color:#666;">黒塗りをタップして開示</p>
+    <div id="playHintList" class="play-hint-list"></div>
+    <div class="modal-actions" style="justify-content: center; margin-top: 20px;">
+      <button id="btnCloseHintView" class="btn dark">閉じる</button>
+    </div>
+  </dialog>
+
+  <!-- 全体設定モーダル（自動セーブ設定を追加） -->
+  <dialog id="globalSettingsModal" class="modal center-modal">
+    <h3>全体設定</h3>
+    <div class="volume-control">
+      <label>
+        <span>BGM</span>
+        <input type="range" id="volBgm" min="0" max="1" step="0.1" value="0.3">
+      </label>
+      <label>
+        <span>SE (効果音)</span>
+        <input type="range" id="volSfx" min="0" max="1" step="0.1" value="0.5">
+      </label>
+      <hr>
+      <label>
+        <span>エディタ自動セーブ (分) <span id="globalAutoSaveVal" style="font-weight:normal; font-size:12px;">OFF</span></span>
+        <input type="range" id="globalAutoSaveSlider" min="0" max="10" step="1" value="0">
+      </label>
+
+      <!-- ▼▼▼ 追加: データ管理セクション ▼▼▼ -->
+      <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <span style="font-weight:bold; font-size:14px; color:#555;">データ管理</span>
+        <button id="btnGlobalResetMain" class="btn small danger" style="width:100%;">メイン進行度を削除</button>
+        <button id="btnGlobalResetFan" class="btn small danger" style="width:100%;">創作進行度を削除</button>
+      </div>
+      <!-- ▲▲▲ 追加ここまで ▲▲▲ -->
+
+    </div>
+    <div class="modal-actions" style="justify-content: center; margin-top: 20px;">
+      <button id="btnCloseGlobalSettings" class="btn primary">OK</button>
+    </div>
+  </dialog>
+
+  <dialog id="patchNotesModal" class="modal slide-modal">
+    <div class="modal-header">
+      <h3>📋 パッチノート</h3>
+      <button class="btn-close" id="btnClosePatchNotes">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="patchNotesList" class="patch-list"></div>
+      <div id="patchDetailArea" class="patch-detail hidden">
+        <button id="btnBackToPatchList" class="btn small dark" style="margin-bottom:10px;">← 一覧に戻る</button>
+        <h4 id="patchDetailTitle">Version X.X.X</h4>
+        <p id="patchDetailSub" style="color:#888; font-size:12px; margin-bottom:15px;"></p>
+        <ul id="patchDetailContent" class="patch-content-list"></ul>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="updateNoticeModal" class="modal center-modal">
+    <h3>🚀 アップデートのお知らせ</h3>
+    <div class="update-notice-body">
+      <div class="update-header">
+        <h2 id="updateNoticeVersion">Version X.X.X</h2>
+        <span id="updateNoticeDate">YYYY/MM/DD</span>
+      </div>
+      <p id="updateNoticeSub" class="update-sub"></p>
+      <hr>
+      <ul id="updateNoticeContent" class="patch-content-list"></ul>
+    </div>
+    <div class="modal-actions" style="justify-content: center; margin-top: 20px;">
+      <button id="btnCloseUpdateNotice" class="btn primary big-btn">確認しました</button>
+    </div>
+  </dialog>
+
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">LOADING...</div>
+  </div>
+
+  <div id="importOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">IMPORTING...</div>
+  </div>
+
+  <dialog id="newLevelModal" class="modal center-modal">
+    <form method="dialog" id="newLevelForm">
+      <h3>新規レベル作成</h3>
+      <label><span>レベル名</span><input type="text" name="levelName" required /></label>
+      <label><span>サブタイトル</span><input type="text" name="levelSub" /></label>
+      <label><span>作者名</span><input type="text" name="levelAuthor" required /></label>
+      <label>
+        <span>サイズ</span>
+        <select name="gridSize">
+          <option value="5" selected>5 x 5</option>
+          <option value="6">6 x 6</option>
+          <option value="7">7 x 7</option>
+          <option value="8">8 x 8</option>
+          <option value="9">9 x 9</option>
+          <option value="10">10 x 10</option>
+        </select>
+      </label>
+      <div class="modal-actions">
+        <button type="button" id="btnCancelNew" class="btn small dark">キャンセル</button>
+        <button type="submit" class="btn primary">作成</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script type="module" src="./main.js"></script>
+  <script type="module" src="./editor.js"></script>
+</body>
+
+</html>

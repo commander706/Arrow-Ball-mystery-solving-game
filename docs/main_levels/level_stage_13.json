@@ -1,0 +1,137 @@
+{
+  "id": "1769325151288",
+  "name": "stage_13",
+  "sub": "薄氷の上",
+  "author": "駒金",
+  "size": 5,
+  "autoSave": 0,
+  "created": 1769325151288,
+  "updated": 1769325272489,
+  "data": [
+    {
+      "type": 3,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    }
+  ]
+}

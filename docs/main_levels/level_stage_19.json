@@ -1,0 +1,257 @@
+{
+  "id": "1769326016386",
+  "name": "stage_19",
+  "sub": "混沌の交差点",
+  "author": "駒金",
+  "size": 7,
+  "autoSave": 0,
+  "created": 1769326016386,
+  "updated": 1769326217945,
+  "data": [
+    {
+      "type": 4,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 3
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 14,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 6,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 9,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 6,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 8,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 2,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 6
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 10,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 0
+    }
+  ]
+}
