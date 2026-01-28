@@ -257,78 +257,96 @@ if (btnCloseUpdateNotice) {
   });
 }
 
-// フェード制御用インターバル管理（全トラック分をオブジェクトで管理）
+// フェード制御用インターバル管理
 let fadeTimers = {};
 
-// 指定したテーマのBGMを再生（クロスフェード）
+// 音量変更が可能かどうかの判定フラグ（初回にチェック）
+let canControlVolume = null; 
+
+function checkVolumeControl() {
+  if (canControlVolume !== null) return canControlVolume;
+  const testAudio = new Audio();
+  testAudio.volume = 0.5;
+  // 設定した0.5が反映されればPC、1のままならiOS(スマホ)
+  canControlVolume = (testAudio.volume === 0.5);
+  return canControlVolume;
+}
+
+// 指定したテーマのBGMを再生
 export function playStageBgm(themeKey) {
   if (!themeKey) themeKey = "warm";
   
-  // 既にその曲が適切な音量で再生中なら何もしない
+  // 既にその曲が再生中なら何もしない
   const targetAudio = bgms[themeKey] || bgms.warm;
-  if (currentBgmKey === themeKey && targetAudio && !targetAudio.paused && targetAudio.volume > 0) {
-    // 音量が下がっている途中かもしれないので、目標音量に戻す
-    targetAudio.volume = audioSettings.bgmVolume;
+  if (currentBgmKey === themeKey && targetAudio && !targetAudio.paused) {
+    // もしフェードイン中で音量が下がっていたら戻す（PCのみ）
+    if (checkVolumeControl()) targetAudio.volume = audioSettings.bgmVolume;
     return;
   }
 
   currentBgmKey = themeKey;
 
-  // ★重要: 既存のフェード処理を全て強制停止（重複防止）
+  // ★重要: 全てのフェードタイマーを強制停止
   Object.keys(fadeTimers).forEach(key => {
     clearInterval(fadeTimers[key]);
     delete fadeTimers[key];
   });
 
-  // 1. 他のBGMをフェードアウト or 停止
+  // 音量操作ができる環境かチェック (PCならTrue, iOSならFalse)
+  const isPc = checkVolumeControl();
+
+  // 1. 他のBGMを停止
   Object.keys(bgms).forEach(key => {
     const audio = bgms[key];
     if (!audio) return;
 
     if (key !== themeKey) {
-      if (!audio.paused) {
-        // スマホ対策: フェードアウト処理
+      // ■ スマホ(iOS) または 既に停止している場合 -> 即座に停止してリセット
+      if (!isPc || audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+      } 
+      // ■ PCで再生中の場合 -> フェードアウト
+      else {
         fadeTimers[key] = setInterval(() => {
           if (audio.volume > 0.05) {
-            audio.volume = Math.max(0, audio.volume - 0.1); // スマホ向けに少し早めに下げる
+            audio.volume = Math.max(0, audio.volume - 0.1);
           } else {
-            // 完全に止める
             audio.pause();
             audio.currentTime = 0;
             clearInterval(fadeTimers[key]);
             delete fadeTimers[key];
           }
         }, 50);
-      } else {
-        // 既に止まっているものは念のためリセット
-        audio.currentTime = 0;
       }
     }
   });
 
-  // 2. ターゲットBGMをフェードイン再生
+  // 2. ターゲットBGMを再生
   if (targetAudio) {
-    // 再生準備
-    targetAudio.volume = 0;
-    // スマホ対策: play() はユーザー操作直後でないと失敗することがあるため catch する
-    const playPromise = targetAudio.play();
-    
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        // 再生成功したらフェードイン開始
-        fadeTimers[themeKey] = setInterval(() => {
-          if (targetAudio.volume < audioSettings.bgmVolume - 0.05) {
-            targetAudio.volume = Math.min(audioSettings.bgmVolume, targetAudio.volume + 0.05);
-          } else {
-            // 目標音量に到達
-            targetAudio.volume = audioSettings.bgmVolume;
-            clearInterval(fadeTimers[themeKey]);
-            delete fadeTimers[themeKey];
-          }
-        }, 50);
-      }).catch(error => {
-        console.log("Audio play blocked (Mobile limitation or Interrupted):", error);
-      });
+    // ■ PCの場合 -> 音量0からフェードイン
+    if (isPc) {
+      targetAudio.volume = 0;
+      const playPromise = targetAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          fadeTimers[themeKey] = setInterval(() => {
+            if (targetAudio.volume < audioSettings.bgmVolume - 0.05) {
+              targetAudio.volume = Math.min(audioSettings.bgmVolume, targetAudio.volume + 0.05);
+            } else {
+              targetAudio.volume = audioSettings.bgmVolume;
+              clearInterval(fadeTimers[themeKey]);
+              delete fadeTimers[themeKey];
+            }
+          }, 50);
+        }).catch(e => console.log("BGM Play Blocked:", e));
+      }
+    } 
+    // ■ スマホ(iOS)の場合 -> 設定音量（反映されるかは端末次第）で即再生
+    else {
+      targetAudio.volume = audioSettings.bgmVolume; // 一応セットするがiOSでは無視される
+      targetAudio.currentTime = 0;
+      targetAudio.play().catch(e => console.log("Mobile BGM Play Blocked:", e));
     }
   }
 }
