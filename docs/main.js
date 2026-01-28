@@ -260,58 +260,76 @@ if (btnCloseUpdateNotice) {
 // フェード制御用インターバル管理
 let fadeTimers = {};
 
-// 音量変更が可能かどうかの判定フラグ（初回にチェック）
-let canControlVolume = null; 
-
-function checkVolumeControl() {
-  if (canControlVolume !== null) return canControlVolume;
-  const testAudio = new Audio();
-  testAudio.volume = 0.5;
-  // 設定した0.5が反映されればPC、1のままならiOS(スマホ)
-  canControlVolume = (testAudio.volume === 0.5);
-  return canControlVolume;
+// iOS判定（iPadのデスクトップモード含む）
+function isIOS() {
+  return (
+    // 通常のiPhone/iPad
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    // iPadOS 13以降のデスクトップモード (MacIntelと偽装するがタッチパネルがある)
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  );
 }
 
 // 指定したテーマのBGMを再生
 export function playStageBgm(themeKey) {
   if (!themeKey) themeKey = "warm";
   
-  // 既にその曲が再生中なら何もしない
   const targetAudio = bgms[themeKey] || bgms.warm;
+  
+  // 既に再生中なら何もしない
   if (currentBgmKey === themeKey && targetAudio && !targetAudio.paused) {
-    // もしフェードイン中で音量が下がっていたら戻す（PCのみ）
-    if (checkVolumeControl()) targetAudio.volume = audioSettings.bgmVolume;
+    // PC版でフェードイン途中だった場合のリカバリ
+    if (!isIOS() && targetAudio.volume < audioSettings.bgmVolume) {
+        targetAudio.volume = audioSettings.bgmVolume;
+    }
     return;
   }
 
   currentBgmKey = themeKey;
 
-  // ★重要: 全てのフェードタイマーを強制停止
+  // ★重要: 全てのフェードタイマーを強制停止・破棄
   Object.keys(fadeTimers).forEach(key => {
     clearInterval(fadeTimers[key]);
     delete fadeTimers[key];
   });
 
-  // 音量操作ができる環境かチェック (PCならTrue, iOSならFalse)
-  const isPc = checkVolumeControl();
-
-  // 1. 他のBGMを停止
+  // ■ 1. 他のBGMを停止
   Object.keys(bgms).forEach(key => {
     const audio = bgms[key];
     if (!audio) return;
 
     if (key !== themeKey) {
-      // ■ スマホ(iOS) または 既に停止している場合 -> 即座に停止してリセット
-      if (!isPc || audio.paused) {
+      // iOS、または既に停止している場合は即座にリセット
+      if (isIOS() || audio.paused) {
         audio.pause();
         audio.currentTime = 0;
       } 
-      // ■ PCで再生中の場合 -> フェードアウト
+      // PCかつ再生中の場合のみフェードアウト
       else {
+        // 安全策: 万が一音量が下がらない環境でも20回(1秒)で強制停止するカウンタ
+        let safetyCounter = 0;
+        
         fadeTimers[key] = setInterval(() => {
+          safetyCounter++;
+          
+          // 音量を下げる試行
           if (audio.volume > 0.05) {
+            const prevVol = audio.volume;
             audio.volume = Math.max(0, audio.volume - 0.1);
-          } else {
+            
+            // ★重要: 音量を下げたはずなのに下がっていない場合（iOS誤判定時など）
+            // 即座にループを抜けて停止させる
+            if (audio.volume === prevVol) {
+               audio.pause();
+               audio.currentTime = 0;
+               clearInterval(fadeTimers[key]);
+               delete fadeTimers[key];
+               return;
+            }
+          }
+          
+          // 音量が0になった、または安全装置(1秒経過)が作動したら停止
+          if (audio.volume <= 0.05 || safetyCounter > 20) {
             audio.pause();
             audio.currentTime = 0;
             clearInterval(fadeTimers[key]);
@@ -322,10 +340,14 @@ export function playStageBgm(themeKey) {
     }
   });
 
-  // 2. ターゲットBGMを再生
+  // ■ 2. ターゲットBGMを再生
   if (targetAudio) {
-    // ■ PCの場合 -> 音量0からフェードイン
-    if (isPc) {
+    if (isIOS()) {
+      // iOS: 音量操作せず即再生
+      targetAudio.currentTime = 0;
+      targetAudio.play().catch(e => console.log("Mobile BGM Play Blocked:", e));
+    } else {
+      // PC: フェードイン
       targetAudio.volume = 0;
       const playPromise = targetAudio.play();
       if (playPromise !== undefined) {
@@ -341,16 +363,9 @@ export function playStageBgm(themeKey) {
           }, 50);
         }).catch(e => console.log("BGM Play Blocked:", e));
       }
-    } 
-    // ■ スマホ(iOS)の場合 -> 設定音量（反映されるかは端末次第）で即再生
-    else {
-      targetAudio.volume = audioSettings.bgmVolume; // 一応セットするがiOSでは無視される
-      targetAudio.currentTime = 0;
-      targetAudio.play().catch(e => console.log("Mobile BGM Play Blocked:", e));
     }
   }
 }
-
 // 互換性のため残すが、実態は playStageBgm を呼ぶ
 export function fadeBgmToEx() {
   playStageBgm("vertex");
