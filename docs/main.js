@@ -257,47 +257,79 @@ if (btnCloseUpdateNotice) {
   });
 }
 
-// --- BGM Fade & Theme Control ---
+// フェード制御用インターバル管理（全トラック分をオブジェクトで管理）
+let fadeTimers = {};
 
 // 指定したテーマのBGMを再生（クロスフェード）
 export function playStageBgm(themeKey) {
   if (!themeKey) themeKey = "warm";
-  if (currentBgmKey === themeKey && bgms[themeKey] && !bgms[themeKey].paused) {
-    bgms[themeKey].volume = audioSettings.bgmVolume;
+  
+  // 既にその曲が適切な音量で再生中なら何もしない
+  const targetAudio = bgms[themeKey] || bgms.warm;
+  if (currentBgmKey === themeKey && targetAudio && !targetAudio.paused && targetAudio.volume > 0) {
+    // 音量が下がっている途中かもしれないので、目標音量に戻す
+    targetAudio.volume = audioSettings.bgmVolume;
     return;
   }
 
-  // 全BGMフェードアウト
+  currentBgmKey = themeKey;
+
+  // ★重要: 既存のフェード処理を全て強制停止（重複防止）
+  Object.keys(fadeTimers).forEach(key => {
+    clearInterval(fadeTimers[key]);
+    delete fadeTimers[key];
+  });
+
+  // 1. 他のBGMをフェードアウト or 停止
   Object.keys(bgms).forEach(key => {
     const audio = bgms[key];
-    if (audio && !audio.paused && key !== themeKey) {
-      const fadeOut = setInterval(() => {
-        if (audio.volume > 0.05) {
-          audio.volume = Math.max(0, audio.volume - 0.05);
-        } else {
-          audio.pause();
-          audio.currentTime = 0;
-          clearInterval(fadeOut);
-        }
-      }, 50);
+    if (!audio) return;
+
+    if (key !== themeKey) {
+      if (!audio.paused) {
+        // スマホ対策: フェードアウト処理
+        fadeTimers[key] = setInterval(() => {
+          if (audio.volume > 0.05) {
+            audio.volume = Math.max(0, audio.volume - 0.1); // スマホ向けに少し早めに下げる
+          } else {
+            // 完全に止める
+            audio.pause();
+            audio.currentTime = 0;
+            clearInterval(fadeTimers[key]);
+            delete fadeTimers[key];
+          }
+        }, 50);
+      } else {
+        // 既に止まっているものは念のためリセット
+        audio.currentTime = 0;
+      }
     }
   });
 
-  // ターゲットBGMフェードイン
-  currentBgmKey = themeKey;
-  const target = bgms[themeKey] || bgms.warm;
-  if (target) {
-    target.volume = 0;
-    target.currentTime = 0;
-    target.play().catch(() => {});
+  // 2. ターゲットBGMをフェードイン再生
+  if (targetAudio) {
+    // 再生準備
+    targetAudio.volume = 0;
+    // スマホ対策: play() はユーザー操作直後でないと失敗することがあるため catch する
+    const playPromise = targetAudio.play();
     
-    const fadeIn = setInterval(() => {
-      if (target.volume < audioSettings.bgmVolume) {
-        target.volume = Math.min(audioSettings.bgmVolume, target.volume + 0.05);
-      } else {
-        clearInterval(fadeIn);
-      }
-    }, 50);
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        // 再生成功したらフェードイン開始
+        fadeTimers[themeKey] = setInterval(() => {
+          if (targetAudio.volume < audioSettings.bgmVolume - 0.05) {
+            targetAudio.volume = Math.min(audioSettings.bgmVolume, targetAudio.volume + 0.05);
+          } else {
+            // 目標音量に到達
+            targetAudio.volume = audioSettings.bgmVolume;
+            clearInterval(fadeTimers[themeKey]);
+            delete fadeTimers[themeKey];
+          }
+        }, 50);
+      }).catch(error => {
+        console.log("Audio play blocked (Mobile limitation or Interrupted):", error);
+      });
+    }
   }
 }
 
