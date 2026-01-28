@@ -927,3 +927,73 @@ div.bg.underwater {
   color: #2ed573;
   border: 1px solid #2ed573;
 }
+
+/* --- style.css の末尾 (宣伝リンクエリア) を書き換え --- */
+
+/* タイトル画面の宣伝リンクエリア */
+.social-area {
+  position: absolute;
+  bottom: calc(30px + var(--sab)); /* 少し底上げ */
+  left: calc(30px + var(--sal));   /* 少し右へ */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;              /* 間隔も少し広げる */
+  z-index: 200;
+  pointer-events: auto;
+}
+
+/* 個別のリンク行デザイン */
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;              /* アイコンと文字の間隔を広げる */
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8); /* 少し明るく */
+  transition: all 0.2s ease;
+  background: rgba(0, 0, 0, 0.4); /* 背景を少し濃く */
+  padding: 10px 20px;     /* 余白を大きく */
+  border-radius: 40px;    /* 丸みを大きく */
+  backdrop-filter: blur(4px);
+}
+
+.social-link:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateX(5px) scale(1.05); /* ホバー時に少し拡大 */
+}
+
+/* アイコン画像 (32px -> 48px) */
+.social-link img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+/* URLテキスト (14px -> 18px) */
+.social-link span {
+  font-family: sans-serif;
+  font-size: 18px;        /* 文字サイズアップ */
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+/* スマホ対応: 画面が狭いときは控えめにする */
+@media (max-width: 600px) {
+  .social-area {
+    bottom: calc(15px + var(--sab));
+    left: calc(15px + var(--sal));
+    gap: 10px;
+  }
+  .social-link {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+  .social-link img {
+    width: 32px;
+    height: 32px;
+  }
+  .social-link span {
+    font-size: 12px;
+  }
+}
