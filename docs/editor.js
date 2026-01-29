@@ -311,11 +311,8 @@ const observer = new MutationObserver((mutations) => {
         mutation.target.classList.contains('screen--active')) {
         renderOfficialList();
       }
-      // 創作レベル選択画面が表示されたらリスト更新（これを追加！）
-      if (mutation.target.id === 'fanmadeSelectScreen' &&
-        mutation.target.classList.contains('screen--active')) {
-        renderFanmadeList();
-      }
+      // ★ fanmadeSelectScreen の監視ブロックを削除しました
+      // (loadFanmadeLevels 関数が完了後に自分で renderFanmadeList を呼ぶため不要です)
     });
   });
 
@@ -469,9 +466,7 @@ const observer = new MutationObserver((mutations) => {
   });
 }
 
-// ▼▼▼ 追加: リスト内ローディング表示関数 ▼▼▼
-let currentLoadingEl = null;
-
+// ▼▼▼ リスト内ローディング表示関数（変更なしですが確認用） ▼▼▼
 function showListLoading(container, initialText = "Initializing...") {
   container.innerHTML = "";
   const wrapper = document.createElement("div");
@@ -485,11 +480,11 @@ function showListLoading(container, initialText = "Initializing...") {
   
   container.appendChild(wrapper);
   
-  // 更新用に関数を返す
   return {
     update: (percent, subText) => {
       const textEl = wrapper.querySelector(".list-loading-text");
       const subEl = wrapper.querySelector(".list-loading-sub");
+      // 0～100の範囲に収めて表示
       if (textEl) textEl.textContent = `${Math.min(100, Math.floor(percent))}%`;
       if (subEl && subText) subEl.textContent = subText;
     },
@@ -498,7 +493,6 @@ function showListLoading(container, initialText = "Initializing...") {
     }
   };
 }
-
 async function loadOfficialLevels() {
   officialLevels = [];
   officialLevelsLoaded = false;
@@ -1843,65 +1837,89 @@ function initFanmadeFeatures() {
 // init() 末尾で実行
 initFanmadeFeatures();
 
-
-// --- FANMADE レベル読み込み (連番方式) ---
+// --- FANMADE レベル読み込み (battle_runtime.js ロジック再現版) ---
 window.loadFanmadeLevels = async function() {
   const container = document.getElementById("fanmadeLevelList");
   let loader = null;
   
   if (container) {
-    // コンテナをクリアしてローディング表示
-    loader = showListLoading(container, "Searching Archives...");
+    container.innerHTML = ""; 
+    // battle_runtime.js のようなテキスト表示
+    loader = showListLoading(container, "Initialize...");
   }
 
   fanmadeLevels = [];
   
-  // 検索上限数（これを分母にする）
-  const MAX_SEARCH = 100;
+  // ▼ ここで「確認するファイルの範囲」を定義します（リストの代わり）
+  // battle_runtime.js における imageList.length の役割です。
+  // ※レベルが20個以上ある場合は、この数字を増やしてください。
+  const CHECK_LIMIT = 12; 
   
-  let i = 0;
-  // 無限ループではなく上限を設ける
-  for (i = 0; i < MAX_SEARCH; i++) {
-    try {
-      // 進捗更新
-      const percent = (i / MAX_SEARCH) * 100;
-      if (loader) loader.update(percent, `Checking File #${i}...`);
+  // battle_runtime.js の loadedAssets に相当
+  let processedCount = 0; 
 
-      // 404が出てもスクリプトは止まらないが、コンソールには出る。
-      // UI上は「Checking...」が出ているのでユーザーは安心できる。
-      const res = await fetch(`./fanmade_levels/level_fanmade_${i}.json`);
-      
-      // ファイルが見つからなければループ終了
-      if (!res.ok) break;
-      
-      const data = await res.json();
-      
-      // メタデータ付与
-      data._fanmadeId = `fan_${i}`;
-      data._isStatic = true;
-      
-      fanmadeLevels.push(data);
-      
-      // 演出用ウェイト（任意: あまりに速いと数字が見えないため）
-      await new Promise(r => setTimeout(r, 20));
+  // 1. 全てのリクエスト(Promise)を一斉に作成・開始（並列処理）
+  const promises = [];
 
-    } catch (e) {
-      // エラー発生時もループ終了とみなす
-      console.warn(`Stopped loading fanmade levels at index ${i}`);
-      break;
-    }
+  for (let i = 0; i < CHECK_LIMIT; i++) {
+    const p = new Promise(async (resolve) => {
+      
+      // 演出用: ID順に少しだけズラして開始することで、数字がパラパラ上がるようにする
+      // (これが無いと一瞬で100%になってしまいます)
+      await new Promise(r => setTimeout(r, i * 30));
+
+      try {
+        const res = await fetch(`./fanmade_levels/level_fanmade_${i}.json`);
+        
+        if (res.ok) {
+          const data = await res.json();
+          data._fanmadeId = `fan_${i}`;
+          data._isStatic = true;
+          fanmadeLevels.push(data);
+          
+          // ログ表示（battle_runtime.js の addLog 相当）
+          if (loader) loader.update((processedCount / CHECK_LIMIT) * 100, `Loaded: Level ${i}`);
+        } else {
+          // ファイルがない場合
+          if (loader) loader.update((processedCount / CHECK_LIMIT) * 100, `Skip: Level ${i} (Not Found)`);
+        }
+      } catch (e) {
+        // エラー時
+        if (loader) loader.update((processedCount / CHECK_LIMIT) * 100, `Error: Level ${i}`);
+      } finally {
+        // 2. 成功/失敗に関わらず進捗を進める (battle_runtime.js の updateProgress 相当)
+        processedCount++;
+        const percent = (processedCount / CHECK_LIMIT) * 100;
+        if (loader) {
+          // ローディング円と％を更新
+          loader.update(percent); 
+        }
+        resolve(); // タスク完了
+      }
+    });
+    promises.push(p);
   }
-  
-  // 完了時は強制的に100%にする
+
+  // 3. 全ての確認が終わるまで待つ (battle_runtime.js の isLoaded 相当)
+  await Promise.all(promises);
+
+  // ID順に並び替え
+  fanmadeLevels.sort((a, b) => {
+    const idA = parseInt(a._fanmadeId.split('_')[1]);
+    const idB = parseInt(b._fanmadeId.split('_')[1]);
+    return idA - idB;
+  });
+
+  // 完了（100%にして少し待機）
   if (loader) {
-    loader.update(100, `Found ${fanmadeLevels.length} Levels`);
+    loader.update(100, "All Assets Ready.");
   }
   
-  // 少し待ってからリスト描画
   setTimeout(() => {
     renderFanmadeList();
-  }, 300);
+  }, 400);
 }
+
 function getFanmadeProgress() {
   const val = localStorage.getItem(FANMADE_PROGRESS_KEY);
   if (!val) return {};
