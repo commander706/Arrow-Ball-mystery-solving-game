@@ -1,0 +1,140 @@
+{
+  "id": "1769874559282",
+  "name": "dlc_1",
+  "sub": "深淵の渦",
+  "author": "駒金",
+  "size": 5,
+  "autoSave": 0,
+  "created": 1769874559282,
+  "updated": 1769874954865,
+  "bgTheme": "cold",
+  "bgmTheme": "sublime",
+  "data": [
+    {
+      "type": 4,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 3,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 5,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 1
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 5
+    },
+    {
+      "type": 4,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 0,
+      "val": 0
+    }
+  ],
+  "hints": []
+}
