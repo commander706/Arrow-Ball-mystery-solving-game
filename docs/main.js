@@ -23,6 +23,16 @@ export const screens = {
 // --- Patch Notes Data ---
 const PATCH_NOTES = [
   {
+    version: "1.3.3",
+    date: "2026/02/01",
+    sub: "Replay,Trail Added",
+    content: [
+      "リプレイ機能を追加",
+      "ボールのトレイルを追加"
+      "UIの色を一部分変更"
+    ]
+  },
+  {
     version: "1.3.1",
     date: "2026/01/30",
     sub: "Minor Bug Fixes & UI Improvements",
