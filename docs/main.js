@@ -28,7 +28,7 @@ const PATCH_NOTES = [
     sub: "Replay,Trail Added",
     content: [
       "リプレイ機能を追加",
-      "ボールのトレイルを追加"
+      "ボールのトレイルを追加",
       "UIの色を一部分変更"
     ]
   },
