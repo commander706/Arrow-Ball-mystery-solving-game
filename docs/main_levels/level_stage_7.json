@@ -1,0 +1,257 @@
+{
+  "id": "1769323955658",
+  "name": "stage_7",
+  "sub": "干渉地帯",
+  "author": "駒金",
+  "size": 7,
+  "autoSave": 0,
+  "created": 1769323955658,
+  "updated": 1769324052857,
+  "data": [
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 2,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 3,
+      "rot": 1,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 1,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 3,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 13,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 12,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 15,
+      "rot": 0,
+      "val": 2
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 2,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 3,
+      "rot": 2,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    },
+    {
+      "type": 0,
+      "rot": 0,
+      "val": 0
+    }
+  ]
+}
