@@ -214,14 +214,14 @@ function pushToUndo() {
 // ★追加: 元に戻す (Undo)
 function execUndo() {
   if (!isEditorMode || undoStack.length === 0) return;
-  
+
   // 現在の状態をRedoに積む
   redoStack.push(JSON.stringify(currentLevel.data));
-  
+
   // Undoスタックから復元
   const prevData = undoStack.pop();
   currentLevel.data = JSON.parse(prevData);
-  
+
   renderGrid(editorGrid);
   playSe('change0'); // 軽い音を鳴らす
 }
@@ -229,14 +229,14 @@ function execUndo() {
 // ★追加: やり直す (Redo)
 function execRedo() {
   if (!isEditorMode || redoStack.length === 0) return;
-  
+
   // 現在の状態をUndoに積む
   undoStack.push(JSON.stringify(currentLevel.data));
-  
+
   // Redoスタックから復元
   const nextData = redoStack.pop();
   currentLevel.data = JSON.parse(nextData);
-  
+
   renderGrid(editorGrid);
   playSe('change0');
 }
@@ -419,7 +419,7 @@ function init() {
   fileImport.addEventListener("change", handleImportLevel);
 
   // ★追加: 変換モーダル関連のイベント
-if (btnOpenConverter) {
+  if (btnOpenConverter) {
     btnOpenConverter.addEventListener("click", () => {
       playChin();
       converterModal.showModal();
@@ -428,7 +428,7 @@ if (btnOpenConverter) {
   if (btnCloseConverter) {
     btnCloseConverter.addEventListener("click", () => converterModal.close());
   }
-  
+
   if (converterDropZone && converterFileInput) {
     // 1. クリック/タップでファイル選択を開く
     converterDropZone.addEventListener("click", () => {
@@ -458,7 +458,7 @@ if (btnOpenConverter) {
       e.preventDefault();
       converterDropZone.style.background = "#fafafa";
       converterDropZone.style.borderColor = "#ccc";
-      
+
       const files = Array.from(e.dataTransfer.files);
       processConverterFiles(files);
     });
@@ -816,10 +816,10 @@ window.loadOfficialLevels = async function () {
       // ★拡張子変更
       const res = await fetch(`./main_levels/level_stage_${i}.3aab`);
       if (!res.ok) break;
-      
+
       const raw = await res.json();
       const data = parse3aabData(raw); // ★展開処理
-      
+
       if (data) {
         data._officialIndex = i;
         data._isEx = false;
@@ -838,7 +838,7 @@ window.loadOfficialLevels = async function () {
       // ★拡張子変更
       const res = await fetch(`./main_levels/level_ex_${j}.3aab`);
       if (!res.ok) break;
-      
+
       const raw = await res.json();
       const data = parse3aabData(raw); // ★展開処理
 
@@ -862,7 +862,7 @@ window.loadOfficialLevels = async function () {
         // ★拡張子変更
         const res = await fetch(`./dlc_levels/level_dlc_${k}.3aab`);
         if (!res.ok) break;
-        
+
         const raw = await res.json();
         const data = parse3aabData(raw); // ★展開処理
 
@@ -1184,7 +1184,7 @@ function handleImportLevel(e) {
         levels.push(newLevel);
         saveLevels(levels);
         renderList();
-        
+
         playChin();
         alert("インポートしました！");
 
@@ -1206,7 +1206,7 @@ function handleImportLevel(e) {
 async function processConverterFiles(files) {
   // JSONのみにフィルタリング
   const targetFiles = files.filter(f => f.name.toLowerCase().endsWith(".json"));
-  
+
   if (targetFiles.length === 0) {
     alert("JSONファイルが選択されていません。");
     return;
@@ -1220,7 +1220,7 @@ async function processConverterFiles(files) {
         const text = await file.text();
         const json = JSON.parse(text);
         const convertedStr = convertJsonTo3aabString(json);
-        
+
         const baseName = file.name.replace(/\.json$/i, "");
         downloadStringAsFile(convertedStr, `${baseName}.3aab`);
         playChin();
@@ -1234,7 +1234,7 @@ async function processConverterFiles(files) {
           alert("ZIP圧縮ライブラリが読み込まれていません。\nインターネット接続を確認するか、再読み込みしてください。");
           return;
         }
-        
+
         const zip = new JSZip();
         let successCount = 0;
 
@@ -1261,7 +1261,7 @@ async function processConverterFiles(files) {
           a.download = "converted_levels.zip";
           a.click();
           URL.revokeObjectURL(url);
-          
+
           playChin();
           alert(`${successCount}個のファイルを変換し、ZIPでダウンロードしました。`);
           converterModal.close();
@@ -1507,9 +1507,9 @@ function loadLevelEditor(id) {
   showLoading(() => {
     document.getElementById("editorLevelTitle").textContent = currentLevel.name;
 
-    // ★ ここを追加: 編集中もそのレベルの背景・音楽を適用
-    const bgTheme = currentLevel.bgTheme || "warm";
-    const bgmTheme = currentLevel.bgmTheme || "warm";
+    // EXステージ（公式・EX問わずフラグがある場合）は演出を強制し、それ以外は個別設定を優先
+    const bgTheme = currentLevel.bgTheme || defaultBg;
+    const bgmTheme = currentLevel.bgmTheme || defaultBgm;
     setStageTheme(bgTheme);
     playStageBgm(bgmTheme);
 
@@ -1559,21 +1559,21 @@ function renderGrid(container) {
 
     if (isEditing) {
       // ★修正: クリック時にUndo履歴へ保存
-      tile.addEventListener("mousedown", (e) => { 
+      tile.addEventListener("mousedown", (e) => {
         if (e.button === 0) {
           pushToUndo(); // 変更前に保存
-          handleTileInteraction(idx); 
+          handleTileInteraction(idx);
         }
       });
-      tile.addEventListener("mouseenter", () => { 
+      tile.addEventListener("mouseenter", () => {
         if (isMouseDown) {
           // ドラッグ描画は連続しすぎるため、ここではUndo保存しない
           // (mousedownの時点で保存されているため、一筆書きの始点に戻れる挙動になる)
           // 厳密にやるならフラグ管理が必要だが、簡易実装としてドラッグ中は保存しない
-          handleTileInteraction(idx); 
+          handleTileInteraction(idx);
         }
       });
-      
+
       // ★修正: ホイール操作時にUndo履歴へ保存
       tile.addEventListener("wheel", (e) => {
         e.preventDefault();
@@ -1826,9 +1826,9 @@ function startRealPlay(levelId, isOfficial = false, isFanmade = false) {
       defaultBgm = "sublime";
     }
 
-    // 個別の指定があればそれを優先
-    const bgTheme = currentLevel.bgTheme || defaultBg;
-    const bgmTheme = currentLevel.bgmTheme || defaultBgm;
+    // EXステージ（公式・EX問わずフラグがある場合）は演出を強制し、それ以外は個別設定を優先
+    const bgTheme = currentLevel._isEx ? "space" : (currentLevel.bgTheme || defaultBg);
+    const bgmTheme = currentLevel._isEx ? "vertex" : (currentLevel.bgmTheme || defaultBgm);
 
     // テーマ適用
     setStageTheme(bgTheme);
@@ -2104,10 +2104,10 @@ function spawnBall(idx, container) {
   const pos = getPixelPos(x, y); ballPos = { x, y };
   gsap.set(ballEl, { left: pos.left, top: pos.top, z: 400, rotationX: -45, rotationZ: -45, opacity: 0, scale: 0.5 });
   const startCell = currentLevel.data[idx];
-  
+
   // 炎状態等のリセット（念のため）
   if (gameState.isFire) {
-      ballEl.classList.add("fire-mode");
+    ballEl.classList.add("fire-mode");
   }
 
   gsap.to(ballEl, {
@@ -2705,8 +2705,8 @@ function startReplayMode() {
     // ★修正: 保存された開始地点があればそこから、なければ検索して開始
     let startIdx = lastAttemptStartIdx;
     if (startIdx === -1 || !currentLevel.data[startIdx] || currentLevel.data[startIdx].type !== TYPE_START) {
-        // フォールバック: 最初に見つかったスタート地点
-        startIdx = currentLevel.data.findIndex(c => c.type === TYPE_START);
+      // フォールバック: 最初に見つかったスタート地点
+      startIdx = currentLevel.data.findIndex(c => c.type === TYPE_START);
     }
 
     if (startIdx !== -1) {
@@ -2796,9 +2796,9 @@ function restartReplay() {
     // ★修正: リスタート時も保存された開始地点を使用
     let startIdx = lastAttemptStartIdx;
     if (startIdx === -1) {
-         startIdx = currentLevel.data.findIndex(c => c.type === TYPE_START);
+      startIdx = currentLevel.data.findIndex(c => c.type === TYPE_START);
     }
-    
+
     if (startIdx !== -1) {
       spawnBall(startIdx, playGrid);
     }
@@ -2806,7 +2806,7 @@ function restartReplay() {
 }
 function resetBallState(container) {
   // ★変更: 画面フラッシュではなく、盤面をフェードアウトさせてからリセットする
-  
+
   // 1. ボール除去
   if (ballEl) {
     gsap.killTweensOf(ballEl);
@@ -2829,13 +2829,13 @@ function resetBallState(container) {
         }
         currentLevel.data = freshData;
       }
-      
+
       resetGameState();
-      
+
       if (originalLevelData) {
         renderGrid(container);
       }
-      
+
       // 4. ステージコンテナをフェードイン
       gsap.to(container, {
         opacity: 1,
@@ -2946,10 +2946,10 @@ function applySettings(e) {
   // ★ ここを追加: 設定したテーマと音楽を即座に反映
   setStageTheme(currentLevel.bgTheme);
   playStageBgm(currentLevel.bgmTheme);
-  
+
   // DLCフラグがある場合は柱の状態を維持・再確認
   if (currentLevel._isDlc) {
-      setShowDlcPillars(true);
+    setShowDlcPillars(true);
   }
 
   settingsModal.close();
